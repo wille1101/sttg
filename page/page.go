@@ -46,15 +46,18 @@ func GetPage(pagenr int) (string, error) {
 // GetHelpPage - Visar hjälpsidan
 func GetHelpPage() string {
 	sida := ""
-	sida += "h / vänster piltanget: Gå en sida åt vänster \n"
-	sida += "l / höger piltanget  : Gå en sida åt höger\n"
-	sida += ": / i                : Gå direkt till en sida\n"
-	sida += "q / Ctrl + c         : Stäng programmet\n"
-	sida += "1                    : Gå direkt till Nyheter\n"
-	sida += "2                    : Gå direkt till Ekonomi\n"
-	sida += "3                    : Gå direkt till Sport\n"
-	sida += "4                    : Gå direkt till Väder\n"
-	sida += "H                    : Visar denna hjälpsida\n"
+	sida += "h / vänster    : Gå en sida åt vänster \n"
+	sida += "l / höger      : Gå en sida åt höger\n"
+	sida += "j / ner        : Skrolla ner på sidan\n"
+	sida += "k / upp        : Skrolla upp på sidan\n"
+	sida += ": / i          : Gå direkt till en sida\n"
+	sida += "q / Ctrl + c   : Stäng programmet\n"
+	sida += "1              : Gå direkt till Nyheter\n"
+	sida += "2              : Gå direkt till Ekonomi\n"
+	sida += "3              : Gå direkt till Sport\n"
+	sida += "4              : Gå direkt till Väder\n"
+	sida += "H              : Visar denna hjälpsida\n"
 	sida += "\n"
+	sida += "esc stänger denna sida"
 	return sida
 }
