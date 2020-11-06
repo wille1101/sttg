@@ -29,15 +29,15 @@ cd sttg && go install
 ## Användning
 
 ### UI
-Uppe till vänster skriver man in sidan man vill gå till efter att man har klickat `: / i`. Standardsidan är 100.
+Uppe till vänster skriver man in sidan man vill gå till efter att man har klickat `:` eller `i`. Standardsidan är 100.
 
 Uppe till höger visas procenten kvar att skrolla på sidan innan du når botten. Om hela sidan syns visas 100%.
 
 ### Tangenter
 - `h, l` eller  `vänster, höger`: Gå en sida åt vänster/höger
 - `j, k` eller `ner, upp`:  Skrolla ner/upp på en sida
-- `: / i`:        Gå direkt till en sida
-- `q / Ctrl + c`: Stäng programmet
+- `:` eller `i`:        Gå direkt till en sida
+- `q` eller `Ctrl + c`: Stäng programmet
 - `1`:            Gå direkt till Nyheter
 - `2`:                  --||--    Ekonomi
 - `3`:                  --||--    Sport
