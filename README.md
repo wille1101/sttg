@@ -40,6 +40,12 @@ Ladda ner repon som en .zip, packa upp innehållet och navigera till den uppacka
 ```
 go install
 ```
+Nu kan du starta programmet igenom att skriva sttg i cmd.
+
+Om du vill ha en .exe-fil, navigera till den uppackade mappen och srkiv:
+```
+go build
+```
 
 ## Användning
 
