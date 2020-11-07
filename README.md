@@ -1,6 +1,6 @@
 # STTG
 
-[![animationf0c62fb2e6694b19.md.gif](https://s8.gifyu.com/images/animationf0c62fb2e6694b19.md.gif)](https://gifyu.com/image/RGxq)
+[![animationf0c62fb2e6694b19.md.gif](https://s8.gifyu.com/images/animationf0c62fb2e6694b19.md.gif)](https://s8.gifyu.com/images/animationf0c62fb2e6694b19.gif)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/wille1101/sttg)](https://goreportcard.com/report/github.com/wille1101/sttg)
 
