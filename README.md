@@ -1,6 +1,6 @@
 # STTG
 
-![gif](https://raw.githubusercontent.com/wille1101/sttg/master/animation.gif)
+![gif](https://raw.githubusercontent.com/wille1101/gifs/master/animation.gif)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/wille1101/sttg)](https://goreportcard.com/report/github.com/wille1101/sttg)
 
