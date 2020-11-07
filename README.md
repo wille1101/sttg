@@ -42,7 +42,7 @@ go install
 ```
 Nu kan du starta programmet igenom att skriva sttg i cmd.
 
-Om du vill ha en .exe-fil, navigera till den uppackade mappen och srkiv:
+Om du vill ha en .exe-fil, navigera till den uppackade mappen och skriv:
 ```
 go build
 ```
