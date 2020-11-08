@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	tui "github.com/wille1101/sttg/tui"
+	"github.com/wille1101/sttg/tui"
 )
 
 func main() {
