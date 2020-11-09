@@ -68,7 +68,7 @@ För att ändra standardtangenterna, samt andra värden som används, kan man sk
 `~/.config/sttg/`
 
 #### Windows
-Kommer snart
+`C:\Users\ANVÄNDARE\AppData\Roaming\sttg\`
 
 Standardtangenterna som nämns ovanför används när en `config.yml`-fil inte definerar en tangent, eller om den  inte finns överhuvudtaget.
 
