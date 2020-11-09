@@ -57,13 +57,110 @@ Uppe till höger visas procenten kvar att skrolla på sidan innan du når botten
 ### Tangenter
 - `h, l` eller  `vänster, höger`: Gå en sida åt vänster/höger
 - `j, k` eller `ner, upp`:  Skrolla ner/upp på en sida
-- `:` eller `i`:        Gå direkt till en sida
+- `:` eller `i`:        Gå direkt till en sida.
 - `q` eller `Ctrl + c`: Stäng programmet
-- `1`:            Gå direkt till Nyheter
-- `2`:                  --||--    Ekonomi
-- `3`:                  --||--    Sport
-- `4`:                  --||--    Väder
+- `1-9`:            Gå direkt till en sida, med siffran du skriver in som första sidosiffra. 
 - `H`:            Visar hjälpsidan
 
-#### Inspiration
+## Konfiguration
+För att ändra standardtangenterna, samt andra värden som används, kan man skapa en `config.yml`-fil i programmets mapp, eller i:
+#### Linux  
+`~/.config/sttg/`
+
+#### Windows
+Kommer snart
+
+Standardtangenterna som nämns ovanför används när en `config.yml`-fil inte definerar en tangent, eller om den  inte finns överhuvudtaget.
+
+### Exempelfil med alla värden satta till standard
+
+```
+
+{
+  #Definera tangenterna för STTG
+  #Varje handling kan tilldelas två tangenter samtidigt
+  "Keys": {
+
+  #Skrolla upp på en sida
+    "Up": [
+      "k",
+      "up"
+    ],
+  #Skrolla ner på en sida
+    "Down": [
+      "j",
+      "down"
+    ],
+  #Gå en sida åt vänster
+    "Left": [
+      "h",
+      "left"
+    ],
+  #Gå en sida åt höger
+    "Right": [
+      "l",
+      "right"
+    ],
+  #Gå direkt till en sida
+    "SetPage": [
+      "i",
+      ":"
+    ],
+  #Visa hjälpsidan
+    "GetHelp": [
+      "H",
+      ""
+    ],
+  #Stäng programmet
+    "Quit": [
+      "q",
+      "ctrl + c"
+    ],
+
+  },
+
+  "Page": {
+    #Standardsidan som visas när STTG startas
+    "DefPageNr": 100,
+
+  },
+
+}
+
+```
+
+### Exempelfil som ändrar navigeringen med Vim-tangenterna h, j, k, l till w, a, s, d
+
+```
+
+{
+  #Definera tangenterna för STTG
+  #Varje handling kan tilldelas två tangenter samtidigt
+  "Keys": {
+  #Skrolla upp på sidan
+    "Up": [
+      "w",
+      "up"
+    ],
+  #Skrolla ner på sidan
+    "Down": [
+      "s",
+      "down"
+    ],
+  #Gå en sida åt vänster
+    "Left": [
+      "a",
+      "left"
+    ],
+  #Gå en sida åt höger
+    "Right": [
+      "d",
+      "right"
+    ],
+  },
+}
+
+```
+
+## Inspiration
   https://github.com/voidcase/txtv

@@ -1,9 +1,12 @@
 package page
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/wille1101/sttg/config"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gookit/color"
@@ -46,17 +49,13 @@ func GetPage(pagenr int) (string, error) {
 // GetHelpPage - Visar hjälpsidan
 func GetHelpPage() string {
 	sida := ""
-	sida += "h / vänster    : Gå en sida åt vänster \n"
-	sida += "l / höger      : Gå en sida åt höger\n"
-	sida += "j / ner        : Skrolla ner på sidan\n"
-	sida += "k / upp        : Skrolla upp på sidan\n"
-	sida += ": / i          : Gå direkt till en sida\n"
-	sida += "q / Ctrl + c   : Stäng programmet\n"
-	sida += "1              : Gå direkt till Nyheter\n"
-	sida += "2              : Gå direkt till Ekonomi\n"
-	sida += "3              : Gå direkt till Sport\n"
-	sida += "4              : Gå direkt till Väder\n"
-	sida += "H              : Visar denna hjälpsida\n"
+	sida += fmt.Sprintf("%s / %s : Gå en sida åt vänster \n", config.Keymap["Left"][0], config.Keymap["Left"][1])
+	sida += fmt.Sprintf("%s / %s : Gå en sida åt höger\n", config.Keymap["Right"][0], config.Keymap["Right"][1])
+	sida += fmt.Sprintf("%s / %s : Skrolla ner på sidan\n", config.Keymap["Down"][0], config.Keymap["Down"][1])
+	sida += fmt.Sprintf("%s / %s : Skrolla upp på sidan\n", config.Keymap["Up"][0], config.Keymap["Up"][1])
+	sida += fmt.Sprintf("%s / %s : Gå direkt till en sida\n", config.Keymap["SetPage"][0], config.Keymap["SetPage"][1])
+	sida += fmt.Sprintf("%s / %s : Stäng programmet\n", config.Keymap["Quit"][0], config.Keymap["Quit"][1])
+	sida += fmt.Sprintf("%s / %s : Visar denna hjälpsida\n", config.Keymap["GetHelp"][0], config.Keymap["GetHelp"][1])
 	sida += "\n"
 	sida += "esc stänger denna sida"
 	return sida

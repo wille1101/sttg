@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/wille1101/sttg/config"
 	"github.com/wille1101/sttg/page"
 
 	input "github.com/charmbracelet/bubbles/textinput"
@@ -30,7 +31,7 @@ func initModel() model {
 	return model{
 		textInput: inputModel,
 		page:      "",
-		pagenr:    100,
+		pagenr:    config.DefPageNr,
 	}
 }
 
@@ -88,43 +89,43 @@ func pageUpdate(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
+
+		case config.Keymap["Quit"][0], config.Keymap["Quit"][1]:
 			return m, tea.Quit
-		case "right", "l":
+
+		case config.Keymap["Right"][0], config.Keymap["Right"][1]:
 			if m.pagenr < 999 {
 				m.pagenr++
 				return m, getPageWrap(m)
 			}
-		case "left", "h":
+		case config.Keymap["Left"][0], config.Keymap["Left"][1]:
 			if m.pagenr > 100 {
 				m.pagenr--
 				return m, getPageWrap(m)
 			}
-		case "down", "j":
-			m.viewport.LineDown(1)
-			return m, nil
-		case "up", "k":
+		case config.Keymap["Up"][0], config.Keymap["Up"][1]:
 			m.viewport.LineUp(1)
 			return m, nil
-		case ":", "i":
+
+		case config.Keymap["Down"][0], config.Keymap["Down"][1]:
+			m.viewport.LineDown(1)
+			return m, nil
+
+		case config.Keymap["SetPage"][0], config.Keymap["SetPage"][1]:
 			m.textInput.Reset()
 			m.textInput.Focus()
 			return inputUpdate(nil, m)
-		case "1":
-			m.pagenr = 100
-			return m, getPageWrap(m)
-		case "2":
-			m.pagenr = 200
-			return m, getPageWrap(m)
-		case "3":
-			m.pagenr = 300
-			return m, getPageWrap(m)
-		case "4":
-			m.pagenr = 400
-			return m, getPageWrap(m)
+
+		case "1", "2", "3", "4", "5", "6", "7", "8", "9":
+			m.textInput.Reset()
+			m.textInput.Focus()
+			return inputUpdate(msg, m)
+
 		case "esc":
 			return m, getPageWrap(m)
-		case "H":
+
+		case config.Keymap["GetHelp"][0], config.Keymap["GetHelp"][1]:
+			m.viewport.GotoTop()
 			return m, getHelpPageWrap(m)
 		}
 	}
