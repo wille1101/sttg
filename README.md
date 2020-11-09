@@ -16,7 +16,7 @@ SVT Text-Tv Go (STTG) är en TUI-klient för SVTs text-tv skriven i Go.
 
 ```
 wget https://github.com/wille1101/sttg/releases/download/1.0.1/sttg_v1.0.1_linux
-chmod +x sttg_v1.0.0_linux && mv sttg_v1.0.0_linux ~/.local/bin/sttg
+chmod +x sttg_v1.0.1_linux && mv sttg_v1.0.1_linux ~/.local/bin/sttg
 ```
 
 eller
