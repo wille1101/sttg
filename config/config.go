@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+	"fmt"
 	v "github.com/spf13/viper"
 )
 
@@ -18,6 +20,8 @@ var (
 
 	//DefPageNr är standardsidan som visas när programmet startar
 	DefPageNr int
+	
+	winPath = fmt.Sprintf("%s%s", os.Getenv("APPDATA"), "\\sttg\\")
 )
 
 //LoadCon laddar in configfilen om den finns och sätter till standardvärden om den inte skulle finnas eller om något inte är definerat i den
@@ -25,6 +29,7 @@ func LoadCon() error {
 	v.SetConfigName("config")
 	v.SetConfigType("yaml")
 	v.AddConfigPath("$HOME/.config/sttg/")
+	v.AddConfigPath(winPath)
 	v.AddConfigPath(".")
 
 	v.SetDefault("Keys.Up", []string{"k", "up"})
