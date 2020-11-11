@@ -75,90 +75,68 @@ Standardtangenterna som nämns ovanför används när en `config.yml`-fil inte d
 ### Exempelfil med alla värden satta till standard
 
 ```
-
-{
-  #Definera tangenterna för STTG
-  #Varje handling kan tilldelas två tangenter samtidigt
-  "Keys": {
-
+---
+#Definera tangenterna för STTG
+#Varje handling kan tilldelas två tangenter samtidigt
+Keys:
   #Skrolla upp på en sida
-    "Up": [
-      "k",
-      "up"
-    ],
+  Up:
+  - k
+  - up
+
   #Skrolla ner på en sida
-    "Down": [
-      "j",
-      "down"
-    ],
+  Down:
+  - j
+  - down
+
   #Gå en sida åt vänster
-    "Left": [
-      "h",
-      "left"
-    ],
+  Left:
+  - h
+  - left
+
   #Gå en sida åt höger
-    "Right": [
-      "l",
-      "right"
-    ],
+  Right:
+  - l
+  - right
+
   #Gå direkt till en sida
-    "SetPage": [
-      "i",
-      ":"
-    ],
+  SetPage:
+  - i
+  - ":"
+
   #Visa hjälpsidan
-    "GetHelp": [
-      "H",
-      ""
-    ],
+  GetHelp:
+  - H
+  - ""
+
   #Stäng programmet
-    "Quit": [
-      "q",
-      "ctrl + c"
-    ],
+  Quit:
+  - q
+  - "ctrl+c"
 
-  },
-
-  "Page": {
-    #Standardsidan som visas när STTG startas
-    "DefPageNr": 100,
-
-  },
-
-}
+Page:
+  #Standardsidan som visas när STTG startas
+  DefPageNr: 100
 
 ```
 
 ### Exempelfil som ändrar navigeringen med Vim-tangenterna h, j, k, l till w, a, s, d
 
 ```
-
-{
-  #Definera tangenterna för STTG
-  #Varje handling kan tilldelas två tangenter samtidigt
-  "Keys": {
-  #Skrolla upp på sidan
-    "Up": [
-      "w",
-      "up"
-    ],
-  #Skrolla ner på sidan
-    "Down": [
-      "s",
-      "down"
-    ],
-  #Gå en sida åt vänster
-    "Left": [
-      "a",
-      "left"
-    ],
-  #Gå en sida åt höger
-    "Right": [
-      "d",
-      "right"
-    ],
-  },
-}
+---
+Keys:
+  Up:
+  - w
+  - up
+  Down:
+  - s
+  - down
+  Left:
+  - a
+  - left
+  Right:
+  - d
+  - right
 
 ```
 
