@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-
 	"github.com/wille1101/sttg/config"
 
 	"github.com/PuerkitoBio/goquery"
@@ -27,23 +26,23 @@ func GetPage(pagenr int) (string, error) {
 		return "", err
 	}
 
-	sida := ""
+	var sida strings.Builder
 	doc.Find("pre.root").Contents().Each(func(i int, s *goquery.Selection) {
 		st := s.Text()
 		switch {
 		case s.HasClass("Y"):
-			sida += color.Yellow.Render(st)
+			sida.WriteString(color.Yellow.Render(st))
 		case s.HasClass("C"):
-			sida += color.Cyan.Render(st)
+			sida.WriteString(color.Cyan.Render(st))
 		case s.HasClass("B"):
-			sida += color.Blue.Render(st)
+			sida.WriteString(color.Blue.Render(st))
 		default:
-			sida += st
+			sida.WriteString(st)
 		}
 
 	})
 
-	return sida, nil
+	return sida.String(), nil
 }
 
 // GetHelpPage - Visar hjälpsidan
