@@ -111,6 +111,22 @@ func pageUpdate(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 			m.viewport.LineDown(1)
 			return m, nil
 
+		case config.Keymap["GoTop"][0], config.Keymap["GoTop"][1]:
+			m.viewport.GotoTop()
+			return m, nil
+
+		case config.Keymap["GoBot"][0], config.Keymap["GoBot"][1]:
+			m.viewport.GotoBottom()
+			return m, nil
+
+		case config.Keymap["GoViewUp"][0], config.Keymap["GoViewUp"][1]:
+			m.viewport.ViewUp()
+			return m, nil
+
+		case config.Keymap["GoViewDown"][0], config.Keymap["GoViewDown"][1]:
+			m.viewport.ViewDown()
+			return m, nil
+
 		case config.Keymap["SetPage"][0], config.Keymap["SetPage"][1]:
 			m.textInput.Reset()
 			m.textInput.Focus()
@@ -161,8 +177,7 @@ func inputUpdate(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	iw := len(m.textInput.Value())
-	shl := ""
-	shl += fmt.Sprintf("%s", m.textInput.View())
+	shl := fmt.Sprintf("%s", m.textInput.View())
 	if len(m.textInput.Value()) == 0 {
 		iw = 2
 	}
