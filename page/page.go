@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+
 	"github.com/wille1101/sttg/config"
 
 	"github.com/PuerkitoBio/goquery"
@@ -13,8 +14,7 @@ import (
 
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
-	svtURLslice := []string{"https://www.svt.se/svttext/tv/pages/", strconv.Itoa(pagenr), ".html"}
-	svtURL := strings.Join(svtURLslice, "")
+	svtURL := fmt.Sprintf("https://www.svt.se/svttext/tv/pages/%s.html", strconv.Itoa(pagenr))
 	resp, err := http.Get(svtURL)
 	if err != nil {
 		return "", err
@@ -28,16 +28,15 @@ func GetPage(pagenr int) (string, error) {
 
 	var sida strings.Builder
 	doc.Find("pre.root").Contents().Each(func(i int, s *goquery.Selection) {
-		st := s.Text()
 		switch {
 		case s.HasClass("Y"):
-			sida.WriteString(color.Yellow.Render(st))
+			sida.WriteString(color.Yellow.Render(s.Text()))
 		case s.HasClass("C"):
-			sida.WriteString(color.Cyan.Render(st))
+			sida.WriteString(color.Cyan.Render(s.Text()))
 		case s.HasClass("B"):
-			sida.WriteString(color.Blue.Render(st))
+			sida.WriteString(color.Blue.Render(s.Text()))
 		default:
-			sida.WriteString(st)
+			sida.WriteString(s.Text())
 		}
 
 	})
