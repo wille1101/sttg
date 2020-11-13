@@ -58,7 +58,7 @@ Uppe till höger visas procenten kvar att skrolla på sidan innan du når botten
 - `h, l` eller  `vänster, höger`: Gå en sida åt vänster/höger
 - `j, k` eller `ner, upp`:  Skrolla ner/upp på en sida
 - `g, G`: Gå till toppen/botten av hela sidan
-- `d, u`: Gå ner/upp en halvsida (Halva höjden av fönstret, inte SVT-sidan)
+- `d, u`: Skrolla ner/upp en hel sida (Höjden av fönstret, inte SVT-sidan)
 - `:` eller `i`:        Gå direkt till en sida
 - `q` eller `Ctrl + c`: Stäng programmet
 - `1-9`:            Gå direkt till en sida, med siffran du skriver in som första sidosiffra. 
@@ -100,6 +100,26 @@ Keys:
   Right:
   - l
   - right
+
+  #Gå en sida upp
+  GoViewUp:
+  - u
+  - ""
+
+  #Gå en sida ner
+  GoViewDown:
+  - d
+  - ""
+
+  #Gå hela vägen upp
+  GoTop:
+  - g
+  - ""
+
+  #Gå hela vägen ner
+  GoBot:
+  - G
+  - ""
 
   #Gå direkt till en sida
   SetPage:
