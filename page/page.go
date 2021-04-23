@@ -14,7 +14,7 @@ import (
 
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
-	svtURL := fmt.Sprintf("https://www.svt.se/svttext/tv/pages/%s.html", strconv.Itoa(pagenr))
+	svtURL := fmt.Sprintf("https://texttv.nu/%s", strconv.Itoa(pagenr))
 	resp, err := http.Get(svtURL)
 	if err != nil {
 		return "", err
@@ -27,7 +27,7 @@ func GetPage(pagenr int) (string, error) {
 	}
 
 	var sida strings.Builder
-	doc.Find("pre.root").Contents().Each(func(i int, s *goquery.Selection) {
+	doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
 		switch {
 		case s.HasClass("Y"):
 			sida.WriteString(color.Yellow.Render(s.Text()))
