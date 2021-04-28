@@ -46,7 +46,7 @@ func getPageWrap(m model) tea.Cmd {
 	return func() tea.Msg {
 		p, err := page.GetPage(m.pagenr)
 		if err != nil {
-			p = "Error: \n Kommer inte åt SVTs hemsida.\n Har du en nätverksanslutning?"
+			p = fmt.Sprintf("Error: \n %s", err)
 		}
 		return pageMsg(p)
 	}

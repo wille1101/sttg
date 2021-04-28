@@ -1,45 +1,66 @@
 package page
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/wille1101/sttg/config"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/gookit/color"
 )
 
+type Page struct {
+	Content []string `json:"content"`
+}
+
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
-	svtURL := fmt.Sprintf("https://texttv.nu/%s", strconv.Itoa(pagenr))
-	resp, err := http.Get(svtURL)
+	svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
+	req, err := http.NewRequest("GET", svtURL, nil)
+	if err != nil {
+		return "", err
+	}
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
 	}
 	defer resp.Body.Close()
 
-	doc, err := goquery.NewDocumentFromReader(resp.Body)
-	if err != nil {
+	var p []Page
+	var sida strings.Builder
+
+	if err := json.NewDecoder(resp.Body).Decode(&p); err != nil {
 		return "", err
 	}
 
-	var sida strings.Builder
-	doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
-		switch {
-		case s.HasClass("Y"):
-			sida.WriteString(color.Yellow.Render(s.Text()))
-		case s.HasClass("C"):
-			sida.WriteString(color.Cyan.Render(s.Text()))
-		case s.HasClass("B"):
-			sida.WriteString(color.Blue.Render(s.Text()))
-		default:
-			sida.WriteString(s.Text())
+	for i := range p[0].Content {
+
+		doc, err := goquery.NewDocumentFromReader(strings.NewReader(p[0].Content[i]))
+		if err != nil {
+			return "", err
 		}
 
-	})
+		doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
+			switch {
+			case s.Children().HasClass("Y"):
+				sida.WriteString(color.Yellow.Render(s.Text()))
+			case s.Children().HasClass("C"):
+				sida.WriteString(color.Cyan.Render(s.Text()))
+			case s.Children().HasClass("B"):
+				sida.WriteString(color.Blue.Render(s.Text()))
+			default:
+				sida.WriteString(s.Text())
+			}
+
+		})
+		sida.WriteString("\n\n")
+		p[0].Content[i] = sida.String()
+
+	}
 
 	return sida.String(), nil
 }
