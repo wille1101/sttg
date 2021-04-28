@@ -177,7 +177,7 @@ func inputUpdate(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	iw := len(m.textInput.Value())
-	shl := fmt.Sprintf("%s", m.textInput.View())
+	shl := m.textInput.View()
 	if len(m.textInput.Value()) == 0 {
 		iw = 2
 	}
@@ -187,7 +187,7 @@ func (m model) View() string {
 	shb, sf := strings.Repeat("-", 41), strings.Repeat("-", 41)
 	sh := shl + shm + shr + "\n" + shb
 
-	sm := fmt.Sprintf("%s", viewport.View(m.viewport))
+	sm := viewport.View(m.viewport)
 
 	return fmt.Sprintf("%s\n%s\n%s", sh, sm, sf)
 }
