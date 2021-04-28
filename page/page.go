@@ -7,9 +7,8 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/wille1101/sttg/config"
-
 	"github.com/gookit/color"
+	"github.com/wille1101/sttg/config"
 )
 
 type Page struct {
@@ -30,8 +29,10 @@ func GetPage(pagenr int) (string, error) {
 	}
 	defer resp.Body.Close()
 
-	var p []Page
-	var sida strings.Builder
+	var (
+		p    []Page
+		sida strings.Builder
+	)
 
 	if err := json.NewDecoder(resp.Body).Decode(&p); err != nil {
 		return "", err
@@ -58,8 +59,6 @@ func GetPage(pagenr int) (string, error) {
 
 		})
 		sida.WriteString("\n\n")
-		p[0].Content[i] = sida.String()
-
 	}
 
 	return sida.String(), nil
