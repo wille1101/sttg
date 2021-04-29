@@ -11,6 +11,7 @@ import (
 	"github.com/wille1101/sttg/config"
 )
 
+//Page - är en typ som representerar en sida med dess information.
 type Page struct {
 	Content       []string `json:"content"`
 	ContentParsed string
@@ -18,6 +19,7 @@ type Page struct {
 	PrevPage      string `json:"prev_page"`
 }
 
+//Parr - är en array av sid-typer
 var Parr [999][1]Page
 
 // GetPage - Visar sidan
