@@ -12,56 +12,57 @@ import (
 )
 
 type Page struct {
-	Content []string `json:"content"`
+	Content       []string `json:"content"`
+	ContentParsed string
 }
+
+var (
+	parr [999][1]Page
+)
 
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
-	svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
-	req, err := http.NewRequest("GET", svtURL, nil)
-	if err != nil {
-		return "", err
-	}
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	var (
-		p    []Page
-		sida strings.Builder
-	)
-
-	if err := json.NewDecoder(resp.Body).Decode(&p); err != nil {
-		return "", err
-	}
-
-	for i := range p[0].Content {
-
-		doc, err := goquery.NewDocumentFromReader(strings.NewReader(p[0].Content[i]))
+	if parr[pagenr][0].ContentParsed == "" {
+		svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
+		req, err := http.NewRequest("GET", svtURL, nil)
 		if err != nil {
 			return "", err
 		}
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			return "", err
+		}
+		defer resp.Body.Close()
 
-		doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
-			switch {
-			case s.Children().HasClass("Y"):
-				sida.WriteString(color.Yellow.Render(s.Text()))
-			case s.Children().HasClass("C"):
-				sida.WriteString(color.Cyan.Render(s.Text()))
-			case s.Children().HasClass("B"):
-				sida.WriteString(color.Blue.Render(s.Text()))
-			default:
-				sida.WriteString(s.Text())
+		if err := json.NewDecoder(resp.Body).Decode(&parr[pagenr]); err != nil {
+			return "", err
+		}
+
+		var sida strings.Builder
+		for i := range parr[pagenr][0].Content {
+			doc, err := goquery.NewDocumentFromReader(strings.NewReader(parr[pagenr][0].Content[i]))
+			if err != nil {
+				return "", err
 			}
-
-		})
-		sida.WriteString("\n\n")
+			doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
+				switch {
+				case s.Children().HasClass("Y"):
+					sida.WriteString(color.Yellow.Render(s.Text()))
+				case s.Children().HasClass("C"):
+					sida.WriteString(color.Cyan.Render(s.Text()))
+				case s.Children().HasClass("B"):
+					sida.WriteString(color.Blue.Render(s.Text()))
+				default:
+					sida.WriteString(s.Text())
+				}
+			})
+			sida.WriteString("\n\n")
+			parr[pagenr][0].ContentParsed = sida.String()
+		}
 	}
 
-	return sida.String(), nil
+	return parr[pagenr][0].ContentParsed, nil
 }
 
 // GetHelpPage - Visar hjälpsidan
