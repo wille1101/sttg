@@ -95,12 +95,12 @@ func pageUpdate(msg tea.Msg, m model) (tea.Model, tea.Cmd) {
 
 		case config.Keymap["Right"][0], config.Keymap["Right"][1]:
 			if m.pagenr < 999 {
-				m.pagenr++
+				m.pagenr, _ = strconv.Atoi(page.Parr[m.pagenr][0].NextPage)
 				return m, getPageWrap(m)
 			}
 		case config.Keymap["Left"][0], config.Keymap["Left"][1]:
 			if m.pagenr > 100 {
-				m.pagenr--
+				m.pagenr, _ = strconv.Atoi(page.Parr[m.pagenr][0].PrevPage)
 				return m, getPageWrap(m)
 			}
 		case config.Keymap["Up"][0], config.Keymap["Up"][1]:

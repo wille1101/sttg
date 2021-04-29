@@ -14,15 +14,15 @@ import (
 type Page struct {
 	Content       []string `json:"content"`
 	ContentParsed string
+	NextPage      string `json:"next_page"`
+	PrevPage      string `json:"prev_page"`
 }
 
-var (
-	parr [999][1]Page
-)
+var Parr [999][1]Page
 
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
-	if parr[pagenr][0].ContentParsed == "" {
+	if Parr[pagenr][0].ContentParsed == "" {
 		svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
 		req, err := http.NewRequest("GET", svtURL, nil)
 		if err != nil {
@@ -35,13 +35,13 @@ func GetPage(pagenr int) (string, error) {
 		}
 		defer resp.Body.Close()
 
-		if err := json.NewDecoder(resp.Body).Decode(&parr[pagenr]); err != nil {
+		if err := json.NewDecoder(resp.Body).Decode(&Parr[pagenr]); err != nil {
 			return "", err
 		}
 
 		var sida strings.Builder
-		for i := range parr[pagenr][0].Content {
-			doc, err := goquery.NewDocumentFromReader(strings.NewReader(parr[pagenr][0].Content[i]))
+		for i := range Parr[pagenr][0].Content {
+			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Parr[pagenr][0].Content[i]))
 			if err != nil {
 				return "", err
 			}
@@ -58,11 +58,11 @@ func GetPage(pagenr int) (string, error) {
 				}
 			})
 			sida.WriteString("\n\n")
-			parr[pagenr][0].ContentParsed = sida.String()
+			Parr[pagenr][0].ContentParsed = sida.String()
 		}
 	}
 
-	return parr[pagenr][0].ContentParsed, nil
+	return Parr[pagenr][0].ContentParsed, nil
 }
 
 // GetHelpPage - Visar hjälpsidan
