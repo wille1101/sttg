@@ -19,48 +19,61 @@ type Page struct {
 	PrevPage      string `json:"prev_page"`
 }
 
-//Parr - är en array av sid-typer
+//Parr - är en array av sid-slices
 var Parr [999][1]Page
+
+func downloadPage(pagenr int) error {
+	svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
+	req, err := http.NewRequest("GET", svtURL, nil)
+	if err != nil {
+		return err
+	}
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if err := json.NewDecoder(resp.Body).Decode(&Parr[pagenr]); err != nil {
+		return err
+	}
+
+	parsePage(pagenr)
+
+	return nil
+}
+
+func parsePage(pagenr int) error {
+	var sida strings.Builder
+	for i := range Parr[pagenr][0].Content {
+		doc, err := goquery.NewDocumentFromReader(strings.NewReader(Parr[pagenr][0].Content[i]))
+		if err != nil {
+			return err
+		}
+		doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
+			switch {
+			case s.Children().HasClass("Y"):
+				sida.WriteString(color.Yellow.Render(s.Text()))
+			case s.Children().HasClass("C"):
+				sida.WriteString(color.Cyan.Render(s.Text()))
+			case s.Children().HasClass("B"):
+				sida.WriteString(color.Blue.Render(s.Text()))
+			default:
+				sida.WriteString(s.Text())
+			}
+		})
+		sida.WriteString("\n\n")
+		Parr[pagenr][0].ContentParsed = sida.String()
+	}
+	return nil
+}
 
 // GetPage - Visar sidan
 func GetPage(pagenr int) (string, error) {
 	if Parr[pagenr][0].ContentParsed == "" {
-		svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
-		req, err := http.NewRequest("GET", svtURL, nil)
-		if err != nil {
+		if err := downloadPage(pagenr); err != nil {
 			return "", err
-		}
-		client := &http.Client{}
-		resp, err := client.Do(req)
-		if err != nil {
-			return "", err
-		}
-		defer resp.Body.Close()
-
-		if err := json.NewDecoder(resp.Body).Decode(&Parr[pagenr]); err != nil {
-			return "", err
-		}
-
-		var sida strings.Builder
-		for i := range Parr[pagenr][0].Content {
-			doc, err := goquery.NewDocumentFromReader(strings.NewReader(Parr[pagenr][0].Content[i]))
-			if err != nil {
-				return "", err
-			}
-			doc.Find("div.root").Contents().Each(func(i int, s *goquery.Selection) {
-				switch {
-				case s.Children().HasClass("Y"):
-					sida.WriteString(color.Yellow.Render(s.Text()))
-				case s.Children().HasClass("C"):
-					sida.WriteString(color.Cyan.Render(s.Text()))
-				case s.Children().HasClass("B"):
-					sida.WriteString(color.Blue.Render(s.Text()))
-				default:
-					sida.WriteString(s.Text())
-				}
-			})
-			sida.WriteString("\n\n")
-			Parr[pagenr][0].ContentParsed = sida.String()
 		}
 	}
 
