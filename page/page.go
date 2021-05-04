@@ -39,7 +39,9 @@ func downloadPage(pagenr int) error {
 		return err
 	}
 
-	parsePage(pagenr)
+	if err := parsePage(pagenr); err != nil {
+		return err
+	}
 
 	return nil
 }
