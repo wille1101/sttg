@@ -19,11 +19,11 @@ type Page struct {
 	PrevPage      string `json:"prev_page"`
 }
 
-//Parr - är en array av sid-slices
+//Parr - är en array av sid-arrays
 var Parr [999][1]Page
 
 func downloadPage(pagenr int) error {
-	svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvtgo", pagenr)
+	svtURL := fmt.Sprintf("http://api.texttv.nu/api/get/%d?app=svttexttvgo", pagenr)
 	req, err := http.NewRequest("GET", svtURL, nil)
 	if err != nil {
 		return err
